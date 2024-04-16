@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
           setUser(session.user);
         };
       } else if (event === 'SIGNED_OUT') {
-        console.log('signed out');
+        ('signed out');
         setIsAuthenticated(false);
         setUser(null);
       }

@@ -34,7 +34,6 @@ export async function deleteComment(commentId) {
     await supabaseClient.from('tweets_comments').delete().eq('comment_id', commentId);
     // Supprime le commentaire de la table des commentaires
     await supabaseClient.from('comments').delete().eq('id', commentId);
-    console.log('Commentaire supprimé avec succès !');
   } catch (error) {
     console.error('Erreur lors de la suppression du commentaire :', error.message);
   }

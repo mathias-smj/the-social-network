@@ -12,8 +12,6 @@ import { emailSchema, passwordSchema, signUpSchema, usernameSchema } from './sch
 // Fonction pour valider les schema zod
 const validateSignUpData = (data) => {
   const validateResult = signUpSchema.safeParse(data);
-  console.log('validate result ', validateResult);
-  console.log(data);
   return validateResult.success;
 }
 

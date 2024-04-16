@@ -13,7 +13,6 @@ const EditProfileForm = () => {
   useEffect(() => {
     // Vérification de l'authentification de l'utilisateur et de la disponibilité de l'objet 'user'
     if (!isAuthenticated || !user) {
-      console.log("Utilisateur non authentifié ou objet 'user' non disponible, redirection...");
       return;
     }
     // Fonction asynchrone pour récupérer les informations du profil de l'utilisateur
@@ -44,8 +43,6 @@ const EditProfileForm = () => {
       // Appel à la fonction API pour mettre à jour les informations du profil de l'utilisateur
       await updateUserProfileInfo(user.id, editedProfileInfo);
       // Affichage des informations mises à jour dans la console
-      console.log('userId : ', user.id)
-      console.log('updatedFields : ', editedProfileInfo)
     } catch (error) {
       console.error('Error updating profile:', error);
     }
