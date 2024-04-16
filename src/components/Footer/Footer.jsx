@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 
+// Composant de bas de page
 const Footer = () => {
   return (
     <footer className="bg-gray-100 text-black rounded-lg shadow-xs">

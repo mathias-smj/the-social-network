@@ -1,6 +1,8 @@
+// Importation du nom de la table utilisateur et du client Supabase
 import { USER_PROFILE_TABLE } from '../../enums/tableNames.js';
 import { supabaseClient } from '../utils/supabaseClient.js';
 
+// Fonction pour trouver un profil par ID d'utilisateur
 export const findProfileById = async userId => {
   const { data, error } = await supabaseClient.from(USER_PROFILE_TABLE).select('*').eq('id', userId);
 
@@ -8,12 +10,13 @@ export const findProfileById = async userId => {
     throw error;
   }
   if (!data || !data.length) {
-    throw new Error(`No user with id ${userId}`);
+    throw new Error(`Aucun utilisateur avec l'ID ${userId}`);
   }
 
   return data[0];
 };
 
+// Fonction pour trouver un profil par nom d'utilisateur
 export const findProfileByUsername = async username => {
   const { data, error } = await supabaseClient.from(USER_PROFILE_TABLE).select('*').eq('username', username);
 
@@ -21,12 +24,13 @@ export const findProfileByUsername = async username => {
     throw error;
   }
   if (!data || !data.length) {
-    throw new Error(`No user with username ${username}`);
+    throw new Error(`Aucun utilisateur avec le nom d'utilisateur ${username}`);
   }
 
   return data[0];
 };
 
+// Fonction pour obtenir les informations de profil utilisateur
 export const getUserProfileInfo = async username => {
   try {
     const { data, error } = await supabaseClient
@@ -44,6 +48,7 @@ export const getUserProfileInfo = async username => {
   }
 }
 
+// Fonction pour obtenir le profil utilisateur actuellement connecté
 export const getUserProfile = async () => {
   const user = supabaseClient.auth.user();
 
@@ -57,13 +62,14 @@ export const getUserProfile = async () => {
     .eq('id', user.id)
     .single();
 
-    if (error) {
-      throw error;
-    }
-    return data;
+  if (error) {
+    throw error;
+  }
+  return data;
 
 }
 
+// Fonction pour obtenir tous les utilisateurs
 export const getAllUsers = async () => {
   try {
     const { data, error } = await supabaseClient
@@ -80,6 +86,7 @@ export const getAllUsers = async () => {
   }
 }
 
+// Fonction pour mettre à jour les informations du profil utilisateur
 export const updateUserProfileInfo = async (userId, updatedFields) => {
   try {
     const { data, error } = await supabaseClient

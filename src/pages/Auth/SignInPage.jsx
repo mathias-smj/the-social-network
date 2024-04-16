@@ -6,10 +6,18 @@ import { AuthContext } from '../../context/AuthContext/AuthContext.jsx';
 import { useAuth } from '../../context/AuthContext/useAuth.js';
 import { toast } from 'sonner';
 
+// Définition du composant SignInPage
 const SignInPage = () => {
+  // Utilisation du hook useNavigate pour la navigation
   const navigate = useNavigate();
-  const { username } = useParams()
-  const { user, session } = useAuth()
+
+  // Utilisation du hook useParams pour récupérer les paramètres d'URL
+  const { username } = useParams();
+
+  // Utilisation du hook useAuth pour accéder au contexte d'authentification
+  const { user, session } = useAuth();
+
+  // Fonction de soumission du formulaire de connexion
   const handleSubmit = async event => {
     event.preventDefault();
     const form = event.target;
@@ -17,14 +25,19 @@ const SignInPage = () => {
     const email = formData.get('email');
     const password = formData.get('password');
 
+    // Appel de la fonction signInWithPassword pour se connecter avec l'email et le mot de passe
     const result = signInWithPassword(email, password);
 
+    // Si la connexion échoue, gérer l'erreur (non implémenté dans le code actuel)
     if (result instanceof Error) {
+      // Gérer l'erreur ici
     } else {
+      // Rediriger l'utilisateur vers la page d'accueil après la connexion réussie
       navigate(`/`);
     }
   };
 
+  // Affichage du formulaire de connexion
   return (
     <div className="flex justify-center items-center h-screen">
       <div className="w-1/2">
@@ -45,11 +58,10 @@ const SignInPage = () => {
             </div>
           </button>
         </form>
-        <p className="text-gray-600 mt-4">Nouveau sur notre site? <Link to={'/'}
-            className="text-blue-500 font-semibold">S'inscrire</Link>
-        </p>
+        <p className="text-gray-600 mt-4">Nouveau sur notre site? <Link to={'/'} className="text-blue-500 font-semibold">S'inscrire</Link></p>
       </div>
     </div>
   );
 }
+
 export default SignInPage;

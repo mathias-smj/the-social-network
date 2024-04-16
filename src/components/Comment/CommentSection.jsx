@@ -6,6 +6,7 @@ import Comment from './Comment';
 const CommentSection = ({ tweetId }) => {
   const [comments, setComments] = useState([]);
 
+  // Utilisation de useEffect pour charger les commentaires une fois que le composant est monté ou que l'identifiant du tweet change
   useEffect(() => {
     const loadComments = async () => {
       const fetchedComments = await getComments(tweetId);
@@ -14,11 +15,13 @@ const CommentSection = ({ tweetId }) => {
     loadComments();
   }, [tweetId]);
 
+  // Fonction pour mettre à jour les commentaires après soumission d'un nouveau commentaire
   const onCommentSubmitted = async () => {
     const fetchedComments = await getComments(tweetId);
     setComments(fetchedComments);
   };
 
+  // Fonction pour supprimer un commentaire
   const handleDelete = async (commentId) => {
     // Appel à la fonction deleteComment pour supprimer le commentaire de la base de données
     const response = await deleteComment(commentId);
@@ -30,7 +33,9 @@ const CommentSection = ({ tweetId }) => {
 
   return (
     <div>
+      {/* Affichage du formulaire de commentaire */}
       <CommentForm tweetId={tweetId} onCommentSubmitted={onCommentSubmitted} />
+      {/* Affichage de chaque commentaire */}
       {comments.map(comment => (
         <Comment key={comment.id} comment={comment} onDelete={handleDelete} />
       ))}

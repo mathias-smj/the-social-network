@@ -5,22 +5,23 @@ import CommentForm from './CommentForm.jsx';
 import { useAuth } from '../../context/AuthContext/useAuth.js';
 
 const CommentTweetList = ({ tweetId }) => {
-  const { user } = useAuth();
+  const { user } = useAuth(); // Utilisation du hook useAuth pour obtenir les informations de l'utilisateur
   const [comments, setComments] = useState([]);
+
+  // Fonction pour mettre à jour les commentaires
   const handleCommentUpdate = async (tweetId) => {
     const data= await getCommentsForTweet(tweetId);
-    console.log('tweet Id : ', tweetId)
-    console.log('data : ', data);
     return data;
   };
 
+  // Utilisation de useEffect pour charger les commentaires une fois que le composant est monté
   useEffect(() => {
     handleCommentUpdate(tweetId).then((data) => {
-      console.log(data);
       setComments(data);
     });
   }, []);
 
+  // Fonction pour supprimer un commentaire
   const handleDelete = async (commentId) => {
     try {
       await deleteComment(commentId);
@@ -32,9 +33,10 @@ const CommentTweetList = ({ tweetId }) => {
 
   return (
     <div>
+      {/* Affichage du formulaire de commentaire */}
       <CommentForm tweetId={tweetId} onUpdateComments={() => handleCommentUpdate(tweetId)} />
+      {/* Affichage de chaque commentaire */}
       {comments && comments.map((comment) => (
-        // eslint-disable-next-line no-undef
         <Comment key={comment.id} tweetId={tweetId} comment={comment} userId={user.id} username={comment.profiles.username} onDelete={handleDelete} />
       ))}
     </div>

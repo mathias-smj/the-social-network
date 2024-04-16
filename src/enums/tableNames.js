@@ -1,3 +1,4 @@
+// Nom de mes tables de bdd stocker dans une variable
 export const USER_PROFILE_TABLE = 'profiles';
 export const TWEETS_TABLE = 'tweets';
 export const COMMENTS_TWEETS_TABLE = 'comments';

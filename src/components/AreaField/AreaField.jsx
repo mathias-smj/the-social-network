@@ -1,3 +1,5 @@
+
+// Composant de Text Area
 export const AreaField = ({ id: id, name, rows = 3, placeholder}) => {
   return (
     <>

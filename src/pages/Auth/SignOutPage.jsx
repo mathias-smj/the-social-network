@@ -2,18 +2,25 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { signOut } from '../../api/models/auth.js';
 
+// Définition du composant SignOutPage
 export const SignOutPage = () => {
+  // Utilisation du hook useNavigate pour la navigation
   const navigate = useNavigate();
-    const handleSignOut = async () => {
-      // eslint-disable-next-line no-useless-catch
-      try {
-        await signOut();
-        navigate('/signin');
-      } catch (error) {
-        console.error(error);
-      }
-    };
 
+  // Fonction pour gérer la déconnexion
+  const handleSignOut = async () => {
+    try {
+      // Appel de la fonction signOut pour se déconnecter
+      await signOut();
+
+      // Rediriger l'utilisateur vers la page de connexion après la déconnexion réussie
+      navigate('/signin');
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // Affichage de la page de déconnexion
   return (
     <div>
       <p>Vous avez été déconnecté avec succès.</p>

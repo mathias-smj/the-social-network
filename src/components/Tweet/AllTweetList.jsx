@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { format } from 'date-fns';
+import { format } from 'date-fns'; // Importer la fonction format de date-fns
 import Tweet from './Tweet';
-import { useAuth } from '../../context/AuthContext/useAuth.js';
-import { checkFollowingStatus, getFollowingTweets } from '../../api/models/followers.js';
-import { TweetList } from './TweetList.jsx';
+import { useAuth } from '../../context/AuthContext/useAuth.js'; // Importer le hook useAuth depuis le contexte AuthContext
+import { checkFollowingStatus, getFollowingTweets } from '../../api/models/followers.js'; // Importer les fonctions pour vérifier l'état de suivi et récupérer les tweets suivis
+import { TweetList } from './TweetList.jsx'; // Importer le composant TweetList
 
 const AllTweetList = ({ userId, onToggleComments }) => {
   const [tweets, setTweets] = useState([]);
@@ -14,12 +14,12 @@ const AllTweetList = ({ userId, onToggleComments }) => {
     const fetchTweets = async () => {
       try {
         // Vérifier si l'utilisateur suit l'utilisateur dont les tweets sont affichés
-        const followingStatus = await checkFollowingStatus(user.id, user.id); // Utilisez la fonction checkFollowingStatus
+        const followingStatus = await checkFollowingStatus(user.id, userId);
         setIsFollowing(followingStatus);
 
         // Si l'utilisateur est connecté et suit l'utilisateur dont les tweets sont affichés, récupérer et afficher les tweets
         if (user && isFollowing) {
-          const tweetsData = await getFollowingTweets(user.id);
+          const tweetsData = await getFollowingTweets(userId);
           // Trier les tweets par date de création
           tweetsData.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
@@ -43,21 +43,22 @@ const AllTweetList = ({ userId, onToggleComments }) => {
 
   return (
     <>
-    <TweetList />
-    <div>
-      {tweets.map((tweet) => (
-        <Tweet
-          key={tweet.id}
-          tweetId={tweet.id}
-          userId={tweet.profile_id}
-          avatar_url={tweet.profiles ? tweet.profiles.avatar_url : ''}
-          username={tweet.profiles ? tweet.profiles.username : ''}
-          createdAt={tweet.created_at}
-          content={tweet.content}
-          onToggleComments={onToggleComments}
-        />
-      ))}
-    </div>
+      <TweetList /> {/* Affichage du composant TweetList */}
+      <div>
+        {/* Boucle pour afficher chaque tweet */}
+        {tweets.map((tweet) => (
+          <Tweet
+            key={tweet.id}
+            tweetId={tweet.id}
+            userId={tweet.profile_id}
+            avatar_url={tweet.profiles ? tweet.profiles.avatar_url : ''}
+            username={tweet.profiles ? tweet.profiles.username : ''}
+            createdAt={tweet.created_at}
+            content={tweet.content}
+            onToggleComments={onToggleComments}
+          />
+        ))}
+      </div>
     </>
   );
 };
